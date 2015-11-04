@@ -49,9 +49,6 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'compressor',
 
-    # Database migrations
-    'south',
-
     # Application base, containing global templates.
     'base',
 
@@ -167,6 +164,8 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
 
 def custom_show_toolbar(request):
     """ Only show the debug toolbar to users with the superuser flag. """
@@ -181,6 +180,13 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TEMPLATE_CONTEXT': True,
     'ENABLE_STACKTRACES': True,
 }
+
+# Uncomment the following setting if you get an ImportError such as:
+#   ImproperlyConfigured: The included urlconf projectname.urls doesn't have any patterns in it
+# See:
+# http://stackoverflow.com/questions/20963856/improperlyconfigured-the-included-urlconf-project-urls-doesnt-have-any-patte/21005346#21005346
+# http://django-debug-toolbar.readthedocs.org/en/1.0/installation.html#explicit-setup
+#DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 # DEBUG_TOOLBAR_PANELS = (
 #     #'debug_toolbar_user_panel.panels.UserPanel',
@@ -198,7 +204,7 @@ DEBUG_TOOLBAR_CONFIG = {
 # Specify a custom user model to use
 #AUTH_USER_MODEL = 'accounts.MyUser'
 
-FILE_UPLOAD_PERMISSIONS = 0664
+FILE_UPLOAD_PERMISSIONS = 0o0664
 
 # The WSGI Application to use for runserver
 WSGI_APPLICATION = '{{ project_name }}.wsgi.application'
